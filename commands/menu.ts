@@ -31,7 +31,7 @@ export = {
       for (let i = 0; i < categoryButtons.length; i += 2) {
         keyboard.push(categoryButtons.slice(i, i + 2));
       }
-      const menuMessage = `👋 Hai ${msg.from?.first_name}${msg.from?.last_name} !\n\nName: LoraBotz\nStatus: Active\n\nHere is a list of available command categories.\nPlease select a category to view command details:`;
+      const menuMessage = `👋 Hi ${msg.from?.first_name}${msg.from?.last_name} !\n\nName: Atomic\nStatus: Active\n\nHere is a list of available command categories.\nPlease select a category to view command details:\nᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅ ᴄʏʀɪʟ ᴛᴇᴄʜ`;
       
       await bot.sendMessage(msg.chat.id, menuMessage, {
         reply_to_message_id: msg.message_id,
