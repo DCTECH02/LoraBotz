@@ -17,4 +17,4 @@ COPY . .
 RUN npm run build
 
 # Set the command to run your app
-CMD ["node", "dist/index.ts"]
+CMD ["node", "index.ts"]
