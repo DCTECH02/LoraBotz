@@ -3,10 +3,10 @@
   "version": "1.1.0",
   "description": "Lora Botz is a Telegram Botz based by TypeScript",
   "main": "index.ts",
-"scripts": {
-  "build": "tsc",
-  "start": "node dist/index.js"
-}
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
   "keywords": [
     "bot",
     "telegram-bot"
