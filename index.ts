@@ -1,4 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
+import express from 'express';
 import { CommandHandler } from './handlers/CommandHandlers';
 import config from './config';
 import dotenv from 'dotenv';
@@ -36,7 +37,6 @@ async function startBot() {
 // Start the bot
 startBot();
 
-const express = require("express")
 // Add HTTP server for Render deployment health check
 const app = express();
 const PORT = process.env.PORT || 3000;
