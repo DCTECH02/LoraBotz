@@ -1,5 +1,4 @@
 import TelegramBot from 'node-telegram-bot-api';
-import express from 'express';
 import { CommandHandler } from './handlers/CommandHandlers';
 import config from './config';
 import dotenv from 'dotenv';

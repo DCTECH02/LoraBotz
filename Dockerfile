@@ -1,6 +1,8 @@
 # Use the official Node.js image
 FROM node:18-alpine
 
+RUN gitclone https://github.com/DCTECH02/Queen_Anita-V7
+
 # Set the working directory
 WORKDIR /usr/src/app
 
@@ -9,6 +11,9 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
+
+RUN npm install --save-dev @types/express
+
 
 # Copy the rest of the project files
 COPY . .
