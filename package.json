@@ -4,9 +4,9 @@
   "description": "Atomic is a Telegram Botz based by TypeScript",
   "main": "index.ts",
   "scripts": {
+  "run": "npm install --save-dev @types/express",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "run": "npm install --save-dev @types/express"
+    "start": "node dist/index.js"
   },
   "keywords": [
     "bot",
