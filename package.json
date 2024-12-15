@@ -5,12 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "heroku-postbuild": "npm install --production=false && npm run build",
-    "postinstall": "npm install --save-dev @types/express"
-  },
-  "engines": {
-    "node": "22.x"
+    "start": "node dist/index.js"
   },
   "keywords": [
     "bot",
@@ -32,7 +27,6 @@
     "node-telegram-bot-api": "^0.66.0",
     "telegraf": "^4.16.3",
     "util": "^0.12.5",
-    "uuid": "^11.0.3",
-    "yt-search": "^2.12.1"
+    "uuid": "^11.0.3"
   }
 }
