@@ -2,7 +2,8 @@ import TelegramBot from 'node-telegram-bot-api';
 import { CommandHandler } from './handlers/CommandHandlers';
 import config from './config';
 import dotenv from 'dotenv';
-
+import express from 'express';
+import path from 'path';
 
 dotenv.config();
 
@@ -35,3 +36,15 @@ async function startBot() {
 
 // Start the bot
 startBot();
+
+// Set up the Express app
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
