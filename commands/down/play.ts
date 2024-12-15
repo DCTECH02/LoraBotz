@@ -1,17 +1,17 @@
-import { CommandHelpers } from '../../types/Command'; // Adjust path if necessary
-import TelegramBot from 'node-telegram-bot-api';
 import axios from 'axios';
-import yts from 'yt-search'; // YouTube search library
+import { CommandHelpers } from '../../types/Command';
+import TelegramBot from 'node-telegram-bot-api';
 
 export = {
-  command: ['play', 'song'], // Command triggers
+  command: ["play", "song"], // Command triggers
+  categories: ["downloader"], // Category of the command
+  description: "Search and download songs from YouTube.",
   noPrefix: false, // Requires prefix (e.g., "/play")
   config: {
     requireOwner: false,
     requireModerator: false,
     requireAdmin: false,
   },
-  description: "Search and download songs from YouTube.",
   example: ["%cmd Faded by Alan Walker"],
   run: async (message: TelegramBot.Message, helpers: CommandHelpers) => {
     const { bot } = helpers;
@@ -48,7 +48,7 @@ export = {
                       `📅 *Uploaded:* ${video.ago}\n` +
                       `🔗 [Watch on YouTube](${video.url})`;
 
-      // Send the preview message with the thumbnail
+      // Send the preview message with the thumbnail, or a placeholder if no thumbnail
       const thumbnail = video.thumbnail || 'https://via.placeholder.com/300x200.png?text=No+Thumbnail';
       await bot.sendPhoto(message.chat.id, thumbnail, {
         caption: preview,
@@ -56,20 +56,27 @@ export = {
       });
 
       // Fetch the song using the external API
-      const apiResponse = await axios.get('https://api.siputzx.my.id/api/d/ytmp3', {
-        params: { url: video.url },
-      });
+      const apiUrl = `https://api.paxsenix.biz.id/yt/ytaudio?url=${encodeURIComponent(video.url)}`;
+      const apiResponse = await axios.get(apiUrl);
 
-      // Check if the API returned a successful response
-      if (apiResponse.data.status) {
-        const { title, dl } = apiResponse.data.data; // Extract song title and download link
+      // Log the API response to check its structure
+      console.log('API Response:', apiResponse.data);
 
-        // Send the audio file directly (similar to the TikTok downloader)
-        await bot.sendAudio(message.chat.id, dl, {
-          caption: `🎧 *Here's your song:*\n🎵 *Title:* ${title}`,
+      // Check if the API returned a valid download link
+      if (apiResponse.data.ok) {
+        const { creator, message: apiMessage, url } = apiResponse.data;
+
+        // Log the download link
+        console.log('Download link:', url);
+
+        // Send the audio file
+        await bot.sendAudio(message.chat.id, url, {
+          caption: `🎧 *Here's your song:*\n🎵 *Title:* ${video.title}\n\n*Creator:* ${creator}\n*Message:* ${apiMessage}`,
           parse_mode: 'Markdown',
         });
       } else {
+        // If the API didn't return a valid download link, show an error
+        console.error('Failed to retrieve download link:', apiResponse.data);
         bot.sendMessage(
           message.chat.id,
           "❌ Unable to download the song. Please try again later."
@@ -77,7 +84,12 @@ export = {
       }
     } catch (error) {
       // Handle error properly, ensuring it's of type 'Error'
-      console.error('Error during play command:', error);
+      if (error instanceof Error) {
+        console.error('Error during play command:', error.message);
+      } else {
+        console.error('Unknown error during play command:', error);
+      }
+
       bot.sendMessage(
         message.chat.id,
         "❌ An error occurred while processing your request. Please try again later."
