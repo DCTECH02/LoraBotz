@@ -47,7 +47,7 @@ export = {
                       `👁️ *Views:* ${video.views}\n` +
                       `⏳ *Duration:* ${video.timestamp}\n` +
                       `📅 *Uploaded:* ${video.ago}\n` +
-                      `🔗 [Watch on YouTube](${video.url})`;
+                      `🔗 [Watch on YouTube](${video.url})\n\n*ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅ ᴄʏʀɪʟ ᴛᴇᴄʜ*`;
 
       // Send the preview message with the thumbnail, or a placeholder if no thumbnail
       const thumbnail = video.thumbnail || 'https://via.placeholder.com/300x200.png?text=No+Thumbnail';
@@ -72,7 +72,7 @@ export = {
 
         // Send the audio file
         await bot.sendAudio(message.chat.id, url, {
-          caption: `🎧 *Here's your song:*\n🎵 *Title:* ${video.title}\n\n*Creator:* ${creator}\n*Message:* ${apiMessage}`,
+          caption: `🎧 *Here's your song:*\n🎵 *Title:* ${video.title}\n\n*ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀᴠɪᴅ ᴄʏʀɪʟ ᴛᴇᴄʜ*`,
           parse_mode: 'Markdown',
         });
       } else {
