@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { CommandHelpers } from '../../types/Command';
 import TelegramBot from 'node-telegram-bot-api';
+import yts from 'yt-search'; // Ensure this is included for YouTube search
 
 export = {
   command: ["play", "song"], // Command triggers
@@ -55,7 +56,7 @@ export = {
         parse_mode: 'Markdown',
       });
 
-      // Fetch the song using the external API
+      // Fetch the song using the new external API
       const apiUrl = `https://api.paxsenix.biz.id/yt/ytaudio?url=${encodeURIComponent(video.url)}`;
       const apiResponse = await axios.get(apiUrl);
 
@@ -64,7 +65,7 @@ export = {
 
       // Check if the API returned a valid download link
       if (apiResponse.data.ok) {
-        const { creator, message: apiMessage, url } = apiResponse.data;
+        const { url, creator, message: apiMessage } = apiResponse.data; // Extract download URL and creator info
 
         // Log the download link
         console.log('Download link:', url);
