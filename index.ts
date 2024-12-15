@@ -2,21 +2,15 @@ import TelegramBot from 'node-telegram-bot-api';
 import { CommandHandler } from './handlers/CommandHandlers';
 import config from './config';
 import dotenv from 'dotenv';
-import express, { Request, Response } from 'express';
+import express from 'express';
 
 dotenv.config();
 
-const TOKEN = process.env.TOKEN_BOT;
-if (!TOKEN) {
-  throw new Error("Missing TOKEN_BOT in environment variables.");
-}
-
-const bot = new TelegramBot(TOKEN, { polling: true });
+const bot = new TelegramBot(`${process.env.TOKEN_BOT}`, { polling: true });
 const commandHandler = new CommandHandler(bot, config);
 
 declare global {
-  // Ensure proper typing for global.handler
-  var handler: CommandHandler;
+   var handler: CommandHandler;
 }
 global.handler = commandHandler;
 
@@ -27,12 +21,10 @@ async function startBot() {
 
     // Handle graceful shutdown
     process.once('SIGINT', () => {
-      console.log("Shutting down bot...");
       bot.stopPolling();
       process.exit(0);
     });
     process.once('SIGTERM', () => {
-      console.log("Shutting down bot...");
       bot.stopPolling();
       process.exit(0);
     });
@@ -49,7 +41,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Basic HTML response for health check
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (req, res) => {
   res.send(`
     <html>
       <head>
