@@ -1,32 +1,21 @@
 {
   "compilerOptions": {
-    /* Basic Options */
-    "target": "es6",                                   /* Modern JavaScript support. */
-    "module": "commonjs",                              /* CommonJS module system for Node.js compatibility. */
-    "rootDir": "./src",                                /* Specify the root folder for TypeScript files. */
-    "outDir": "./dist",                                /* Specify output directory for compiled files. */
-    "strict": true,                                    /* Enable all strict type-checking options. */
-    "esModuleInterop": true,                           /* Enable ES module compatibility with CommonJS modules. */
-    "forceConsistentCasingInFileNames": true,          /* Ensure consistent casing in imports. */
-    "skipLibCheck": true,                              /* Skip type checking for .d.ts files to speed up builds. */
-
-    /* Additional Options */
-    "resolveJsonModule": true,                         /* Enable importing .json files. */
-    "allowSyntheticDefaultImports": true,             /* Allow default imports for modules without default exports. */
-
-    /* Debugging Options */
-    "sourceMap": true,                                 /* Generate source maps for debugging. */
-
-    /* Type Checking */
-    "noImplicitAny": true,                             /* Enable error reporting for variables with `any` type. */
-    "strictNullChecks": true,                          /* Check for null and undefined. */
-
-    /* Module Resolution */
-    "moduleResolution": "node",                       /* Use Node.js module resolution strategy. */
-
-    /* Compatibility Options */
-    "allowJs": true                                    /* Allow JavaScript files in the project. */
+    "target": "es6",
+    "module": "commonjs",
+    "rootDir": "./",                              /* Root is the current directory. */
+    "outDir": "./dist",                           /* Output folder for compiled files. */
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "allowJs": true
   },
-  "include": ["src/**/*.ts"],                          /* Include all TypeScript files in the `src` folder. */
-  "exclude": ["node_modules", "dist"]                  /* Exclude unnecessary folders. */
+  "include": ["**/*.ts"],                        /* Include all TypeScript files in the root and subdirectories. */
+  "exclude": ["node_modules", "dist"]            /* Exclude build output and dependencies. */
 }
