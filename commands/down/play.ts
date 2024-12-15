@@ -1,5 +1,5 @@
 import { Message } from 'node-telegram-bot-api';
-import { CommandHelpers } from '../types/Command';
+import { CommandHelpers } from '../../types/Command';
 import axios from 'axios';
 import yts from 'yt-search'; // YouTube search library
 
