@@ -2,7 +2,7 @@ import TelegramBot from 'node-telegram-bot-api';
 import { CommandHandler } from './handlers/CommandHandlers';
 import config from './config';
 import dotenv from 'dotenv';
-import express, { Request, Response } from 'express';
+import express from 'express';
 import path from 'path';
 
 // Load environment variables
@@ -50,7 +50,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Serve gifted.html
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
