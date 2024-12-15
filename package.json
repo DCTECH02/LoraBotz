@@ -8,6 +8,9 @@
     "start": "node dist/index.js",
     "postinstall": "npm install --save-dev @types/express"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "keywords": [
     "bot",
     "telegram-bot"
