@@ -1,33 +1,33 @@
-import { CommandsHelpers } from '../../types/Command'; // Adjust path if necessary
-import TelegramBot from 'node-telegram-bot-api'; // This is Mandatory
+import { Message } from 'node-telegram-bot-api';
+import { CommandHelpers } from '../../types/Command';
 import axios from 'axios';
 import yts from 'yt-search'; // YouTube search library
 
-export = {
+module.exports = {
   command: ['play', 'song'], // Command triggers
-  categories: ['music'], // You can adjust the category as needed
-  description: 'Search and download songs from YouTube.',
-  noPrefix: false, // Requires a prefix (e.g., "/play")
+  noPrefix: false, // Requires prefix (e.g., "/play")
   config: {
     requireOwner: false,
     requireModerator: false,
     requireAdmin: false,
   },
+  description: "Search and download songs from YouTube.",
   example: ["%cmd Faded by Alan Walker"],
+  run: async (message: Message, helpers: CommandHelpers) => {
+    const { bot } = helpers;
 
-  run: async (msg: TelegramBot.Message, { bot, text, args, command, callbackQuery, isCallback }: CommandsHelpers) => {
     // Extract the song name from the message
-    const inputText = args.join(' ');
+    const inputText = message.text?.split(' ').slice(1).join(' ');
     if (!inputText) {
       return bot.sendMessage(
-        msg.chat.id,
+        message.chat.id,
         "❌ Please provide the song name.\nExample: `/play Faded by Alan Walker`"
       );
     }
 
     try {
       // React with a "searching" emoji
-      await bot.sendMessage(msg.chat.id, "🔍 Searching for your song...");
+      await bot.sendMessage(message.chat.id, "🔍 Searching for your song...");
 
       // Search for the song on YouTube
       const search = await yts(inputText);
@@ -35,7 +35,7 @@ export = {
 
       if (!video) {
         return bot.sendMessage(
-          msg.chat.id,
+          message.chat.id,
           "❌ Sorry, I couldn't find the song. Try another keyword."
         );
       }
@@ -48,9 +48,9 @@ export = {
                       `📅 *Uploaded:* ${video.ago}\n` +
                       `🔗 [Watch on YouTube](${video.url})`;
 
-      // Send the preview message with the thumbnail
+      // Send the preview message with the thumbnail, or a placeholder if no thumbnail
       const thumbnail = video.thumbnail || 'https://via.placeholder.com/300x200.png?text=No+Thumbnail';
-      await bot.sendPhoto(msg.chat.id, thumbnail, {
+      await bot.sendPhoto(message.chat.id, thumbnail, {
         caption: preview,
         parse_mode: 'Markdown',
       });
@@ -65,21 +65,26 @@ export = {
         const { title, dl } = apiResponse.data.data; // Extract song title and download link
 
         // Send the audio file
-        await bot.sendAudio(msg.chat.id, dl, {
+        await bot.sendAudio(message.chat.id, dl, {
           caption: `🎧 *Here's your song:*\n🎵 *Title:* ${title}`,
           parse_mode: 'Markdown',
         });
       } else {
         bot.sendMessage(
-          msg.chat.id,
+          message.chat.id,
           "❌ Unable to download the song. Please try again later."
         );
       }
     } catch (error) {
-      // Handle errors and notify the user
-      console.error('Error during play command:', (error as any).message || error);
+      // Handle error properly, ensuring it's of type 'Error'
+      if (error instanceof Error) {
+        console.error('Error during play command:', error.message);
+      } else {
+        console.error('Unknown error during play command:', error);
+      }
+
       bot.sendMessage(
-        msg.chat.id,
+        message.chat.id,
         "❌ An error occurred while processing your request. Please try again later."
       );
     }
