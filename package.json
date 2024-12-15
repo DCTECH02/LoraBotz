@@ -3,11 +3,11 @@
   "version": "1.0",
   "description": "Atomic is a Telegram Botz based by TypeScript",
   "main": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "postinstall": "npm install --save-dev @types/express"
-  },
+"scripts": {
+  "build": "tsc",
+  "start": "node dist/index.js",
+  "heroku-postbuild": "npm install --only=dev && npm run build"
+}
   "engines": {
     "node": "22.x"
   },
