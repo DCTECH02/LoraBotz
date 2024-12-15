@@ -1,9 +1,9 @@
-import { Message } from 'node-telegram-bot-api';
-import { CommandHelpers } from '../../types/Command';
+import { CommandHelpers } from '../../types/Command'; // Adjust path if necessary
+import TelegramBot from 'node-telegram-bot-api';
 import axios from 'axios';
 import yts from 'yt-search'; // YouTube search library
 
-module.exports = {
+export = {
   command: ['play', 'song'], // Command triggers
   noPrefix: false, // Requires prefix (e.g., "/play")
   config: {
@@ -13,7 +13,7 @@ module.exports = {
   },
   description: "Search and download songs from YouTube.",
   example: ["%cmd Faded by Alan Walker"],
-  run: async (message: Message, helpers: CommandHelpers) => {
+  run: async (message: TelegramBot.Message, helpers: CommandHelpers) => {
     const { bot } = helpers;
 
     // Extract the song name from the message
@@ -48,7 +48,7 @@ module.exports = {
                       `📅 *Uploaded:* ${video.ago}\n` +
                       `🔗 [Watch on YouTube](${video.url})`;
 
-      // Send the preview message with the thumbnail, or a placeholder if no thumbnail
+      // Send the preview message with the thumbnail
       const thumbnail = video.thumbnail || 'https://via.placeholder.com/300x200.png?text=No+Thumbnail';
       await bot.sendPhoto(message.chat.id, thumbnail, {
         caption: preview,
@@ -64,7 +64,7 @@ module.exports = {
       if (apiResponse.data.status) {
         const { title, dl } = apiResponse.data.data; // Extract song title and download link
 
-        // Send the audio file
+        // Send the audio file directly
         await bot.sendAudio(message.chat.id, dl, {
           caption: `🎧 *Here's your song:*\n🎵 *Title:* ${title}`,
           parse_mode: 'Markdown',
