@@ -64,7 +64,7 @@ export = {
       if (apiResponse.data.status) {
         const { title, dl } = apiResponse.data.data; // Extract song title and download link
 
-        // Send the audio file directly
+        // Send the audio file directly (similar to the TikTok downloader)
         await bot.sendAudio(message.chat.id, dl, {
           caption: `🎧 *Here's your song:*\n🎵 *Title:* ${title}`,
           parse_mode: 'Markdown',
@@ -77,12 +77,7 @@ export = {
       }
     } catch (error) {
       // Handle error properly, ensuring it's of type 'Error'
-      if (error instanceof Error) {
-        console.error('Error during play command:', error.message);
-      } else {
-        console.error('Unknown error during play command:', error);
-      }
-
+      console.error('Error during play command:', error);
       bot.sendMessage(
         message.chat.id,
         "❌ An error occurred while processing your request. Please try again later."
